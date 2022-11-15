@@ -17,10 +17,9 @@
 - 整体介绍 https://blog.lz1998.net/blogs/bot/2020/bot-introduction/
 - Starter介绍 https://blog.lz1998.net/blogs/bot/2020/pbbot-doc/
 
-<<<<<<< HEAD
 ## 修改 
  使用GMC 扫码登陆扣扣
-   #####git添加远程仓库
+   ##git添加远程仓库
  git remote add origin git@github.com:Amoylee49/Spring-Mirai-Server.git
  ssh-keygen -t rsa -C "amoyleeo@qq.com"
   在电脑主目录里找到.ssh目录 添加公钥id_rsa.pub
