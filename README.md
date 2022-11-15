@@ -17,6 +17,7 @@
 - 整体介绍 https://blog.lz1998.net/blogs/bot/2020/bot-introduction/
 - Starter介绍 https://blog.lz1998.net/blogs/bot/2020/pbbot-doc/
 
+<<<<<<< HEAD
 ## 修改 
  使用GMC 扫码登陆扣扣
    #####git添加远程仓库
@@ -25,3 +26,6 @@
   在电脑主目录里找到.ssh目录 添加公钥id_rsa.pub
   测试 ssh 连接
   ssh -T git@github.com
+=======
+##修改
+>>>>>>> 7c7f692... git init from lz1998
