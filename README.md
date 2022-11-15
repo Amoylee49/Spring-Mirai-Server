@@ -18,3 +18,4 @@
 - Starter介绍 https://blog.lz1998.net/blogs/bot/2020/pbbot-doc/
 
 ## 修改 
+ 使用GMC 扫码登陆扣扣
