@@ -21,6 +21,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version>
+        </dependency>
+        <dependency>
             <groupId>net.lz1998</groupId>
             <artifactId>pbbot-spring-boot-starter</artifactId>
             <version>0.0.35</version>
