@@ -15,6 +15,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+/**
+ * 只运行一次，数据是append 到 txt 文件的
+ */
 public class JsoupGetCharcaterNameUtil {
 
     public static void main(String[] args) {
@@ -60,7 +63,7 @@ public class JsoupGetCharcaterNameUtil {
                 builder.append("\n");
 
         }
-        System.out.println(type +"总人物有几个："+builder.length());
+        System.out.println(type +"总人物有几个："+ i );
 
         try {
             charcaterNameTxT(builder);

@@ -17,12 +17,12 @@ public class JsoupParseHtml {
 
     /**
      * 获取人物图片链接 image
-     *
+     * Jsoup 选择器 参考 https://blog.csdn.net/zyb418/article/details/123283644
      * @param name
      * @return
      */
     public static Charcater parseImageUrl(String name) {
-//        name = "紫色的传令 艾丽丝";
+//        name = "水之神女 海琅";
         Document document = null;
         try {
             document = Jsoup.connect(Constant.Wiki_Path + name).get();
@@ -39,7 +39,7 @@ public class JsoupParseHtml {
 
         //输出内容
 //        Elements cqframe_box = document.getElementsByClass("cqframe_box");
-        Elements content = document.select("div.cqframe_box:contains(b)");
+        Elements content = document.select("div.hero_story");
 
         String text = content.text();
         if (text.length() > Constant.Thirty) {
