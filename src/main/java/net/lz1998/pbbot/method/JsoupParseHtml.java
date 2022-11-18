@@ -7,10 +7,12 @@ import net.lz1998.pbbot.constant.Constant;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Slf4j
+@Component
 public class JsoupParseHtml {
 
     /**
@@ -20,10 +22,10 @@ public class JsoupParseHtml {
      * @return
      */
     public static Charcater parseImageUrl(String name) {
-        name = "紫色的传令 艾丽丝";
+//        name = "紫色的传令 艾丽丝";
         Document document = null;
         try {
-            document = Jsoup.connect("https://wiki.biligame.com/cq/" + name).get();
+            document = Jsoup.connect(Constant.Wiki_Path + name).get();
         } catch (IOException e) {
             log.info("获取不到人物链接");
         }
@@ -36,12 +38,12 @@ public class JsoupParseHtml {
         String title = document.title();
 
         //输出内容
-        Elements cqframe_box = document.getElementsByClass("cqframe_box");
+//        Elements cqframe_box = document.getElementsByClass("cqframe_box");
         Elements content = document.select("div.cqframe_box:contains(b)");
 
         String text = content.text();
         if (text.length() > Constant.Thirty) {
-            text = text.substring(0, Constant.Thirty)+Constant.etc;
+            text = text.substring(0, Constant.Thirty) + Constant.etc;
         }
 //        select(“div.masthead”).first();
         Charcater character = new Charcater();
