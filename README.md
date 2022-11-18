@@ -22,6 +22,8 @@
    #### git添加远程仓库
     git remote add origin git@github.com:Amoylee49/Spring-Mirai-Server.git
     ssh-keygen -t rsa -C "amoyleeo@qq.com"
-  ######在电脑主目录里找到.ssh目录 添加公钥id_rsa.pub
+   ####在电脑主目录里找到.ssh目录 添加公钥id_rsa.pub
      测试 ssh 连接
     ssh -T git@github.com
+## CQ WIKI 链接
+     https://wiki.biligame.com/cq/

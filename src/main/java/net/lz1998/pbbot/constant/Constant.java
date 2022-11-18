@@ -15,4 +15,5 @@ public class Constant {
     public static final String Wiki_Path= "https://wiki.biligame.com/cq/";
 
     public static final String[] characterName = { "紫色的传令 艾丽丝","四天王夏洛特"};
+    public static final String[] characterType = { "剑士","骑士","弓手","猎人","法师","祭司"};
 }

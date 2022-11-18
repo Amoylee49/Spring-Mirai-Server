@@ -20,7 +20,7 @@ import java.util.Optional;
 @Component
 public class MatchDirctionaryName {
     //最大字典长度
-    private static final int MAX_LENGTH = 5;
+    private static final int MAX_LENGTH = 6;
 
     //载入字典和自定义添加词
     private static HashSet<String> dictionary;
@@ -144,7 +144,7 @@ public class MatchDirctionaryName {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(dicpath), "UTF-8"));
             try {
                 while (((line = br.readLine()) != null)) {
-                    // 按照空格切分
+                    // 按照空格 ";" 切分
                     String[] str = line.split(Constant.Split_regx);
                     for (int i = 0; i < str.length; i++) {
                         line = str[i];
