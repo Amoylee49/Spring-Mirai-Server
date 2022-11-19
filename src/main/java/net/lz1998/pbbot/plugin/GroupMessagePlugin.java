@@ -47,11 +47,10 @@ public class GroupMessagePlugin extends BotPlugin {
             String charcaterName = dirctionaryName.matchDictionName(chinese);
             if (!StringUtil.isBlank(charcaterName)) {
                 Charcater charcater = parseHtml.parseImageUrl(charcaterName);
-
                 //发送群消息
                 Msg msg = Msg.builder().image(charcater.getImageUrl())
-                        .at(userId)
-                        .share(Constant.Wiki_Path + charcater.getName(),
+//                        .at(userId)
+                        .share(Constant.Wiki_Path+charcaterName,
                                 charcater.getTitle(), charcater.getContent(), charcater.getImageUrl())
                         .sendToGroup(bot, groupId);
             }

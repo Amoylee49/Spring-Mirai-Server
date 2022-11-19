@@ -42,9 +42,16 @@ public class JsoupParseHtml {
         Elements content = document.select("div.hero_story");
 
         String text = content.text();
+        if (src.isEmpty()) {
+            src = Constant.Wiki_Logo_Path;
+        }
+        if (text.isEmpty()) {
+            text = document.select("div.quote-box").text();
+        }
         if (text.length() > Constant.Thirty) {
             text = text.substring(0, Constant.Thirty) + Constant.etc;
         }
+
 //        select(“div.masthead”).first();
         Charcater character = new Charcater();
         character.setImageUrl(src);

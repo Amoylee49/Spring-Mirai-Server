@@ -15,7 +15,7 @@ public class JudgeMessagePrefix {
 
     public static void main(String[] args) {
 //        System.out.println(groupMessagePrefix(""));
-        filterMessageByRegx("");
+//        filterMessageByRegx("");
     }
 
     /**
@@ -34,6 +34,17 @@ public class JudgeMessagePrefix {
         return matcher.find();
     }
 
+    /**
+     * 判断群消息是否是请求提示
+     * @param tipMessage
+     * @return
+     */
+    public boolean tipMessage(String tipMessage){
+        Matcher matcher = Pattern.compile(Constant.Tip_regx,Pattern.CASE_INSENSITIVE)
+                .matcher(tipMessage);
+        return matcher.find();
+    }
+
 
     /**
      * 过滤带查询标志的message
@@ -41,7 +52,7 @@ public class JudgeMessagePrefix {
      * @param groupMessage
      * @return
      */
-    public static String filterMessageByRegx(String groupMessage) {
+   /* public static String filterMessageByRegx(String groupMessage) {
         groupMessage = "   qr 夏洛  特";
 
         String[] groupMesNew = groupMessage.trim().toLowerCase().split(Constant.Split_regx);
@@ -63,7 +74,7 @@ public class JudgeMessagePrefix {
         }
 
         return "";
-    }
+    }*/
 
   /*  private void getStr(String input){
         Stream<Object> booleanStream = Stream.of(input).map(s -> {

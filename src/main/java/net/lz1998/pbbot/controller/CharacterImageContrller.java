@@ -25,7 +25,7 @@ public class CharacterImageContrller {
     @RequestMapping(value = "/getImage2", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE})
     public BufferedImage getImage(@RequestParam(defaultValue = "绷带艾丽") String characterName) throws IOException {
         //创建400*300图片
-        BufferedImage bufferedImage = new BufferedImage(210, 180, BufferedImage.TYPE_INT_RGB);
+        BufferedImage bufferedImage = new BufferedImage(410, 280, BufferedImage.TYPE_INT_RGB);
         //获取画笔
         Graphics2D graphics = bufferedImage.createGraphics();
         //背景填充

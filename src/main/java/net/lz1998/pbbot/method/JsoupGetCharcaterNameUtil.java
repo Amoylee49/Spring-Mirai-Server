@@ -58,7 +58,7 @@ public class JsoupGetCharcaterNameUtil {
             i++;
             String attr = e.select("a").attr("title");
 //            System.out.println(attr);
-                builder.append(attr).append(";").append("\t");
+                builder.append(attr).append(";");
             if (i%5 ==0)
                 builder.append("\n");
 

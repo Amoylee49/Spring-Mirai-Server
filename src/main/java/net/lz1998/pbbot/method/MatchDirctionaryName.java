@@ -8,10 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Java---中文词匹配 正向、逆向和双向最大匹配算法
@@ -115,22 +112,27 @@ public class MatchDirctionaryName {
     public String matchDictionName(String messageChar) {
         //获取字典
         getDictionary();
+        //字典添加自定义词汇
+        addWord();
 
-        List<String> leftMax = leftMax(messageChar);
-        List<String> rightMax = rightMax(messageChar);
         Optional<String> characterName = Optional.empty();
+        List<String> leftMax = leftMax(messageChar);
         if (!leftMax.isEmpty()) {
             //如果结果集不为空，获取字典中的匹配
             String leftStr = leftMax.get(0);
             Optional<String> dirName = dictionary.stream().filter(s -> s.startsWith(leftStr)).findAny();
             characterName = dirName;
-        } else if (!rightMax.isEmpty()) {
+            return characterName.get();
+        }
+        List<String> rightMax = rightMax(messageChar);
+        if (!rightMax.isEmpty()) {
             //如果结果集不为空，获取字典中的匹配
             String rightStr = rightMax.get(0);
             Optional<String> dirName = dictionary.stream().filter(s -> s.endsWith(rightStr)).findAny();
             characterName = dirName;
+            return characterName.get();
         }
-        return characterName.isPresent() ? characterName.get() : "";
+        return "";
     }
 
     // 初始化字典，采用 hashset 存储
@@ -158,6 +160,10 @@ public class MatchDirctionaryName {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    // 自定义添加词汇
+    public void addWord() {
+        dictionary.addAll(Arrays.asList(Constant.specialType));
     }
 
 }
