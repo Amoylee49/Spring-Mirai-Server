@@ -2,7 +2,7 @@ package net.lz1998.pbbot.method;
 
 
 import lombok.extern.slf4j.Slf4j;
-import net.lz1998.pbbot.bean.Charcater;
+import net.lz1998.pbbot.bean.Character;
 import net.lz1998.pbbot.constant.Constant;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,7 +21,7 @@ public class JsoupParseHtml {
      * @param name
      * @return
      */
-    public static Charcater parseImageUrl(String name) {
+    public static Character parseImageUrl(String name) {
 //        name = "水之神女 海琅";
         Document document = null;
         try {
@@ -53,7 +53,7 @@ public class JsoupParseHtml {
         }
 
 //        select(“div.masthead”).first();
-        Charcater character = new Charcater();
+        Character character = new Character();
         character.setImageUrl(src);
         character.setName(name);
         character.setTitle(title);

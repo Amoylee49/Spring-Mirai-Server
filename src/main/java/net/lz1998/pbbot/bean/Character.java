@@ -2,11 +2,10 @@ package net.lz1998.pbbot.bean;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
 
 @Data
 @NoArgsConstructor
-public class Charcater {
+public class Character {
 
     private String name;
     private String title;

@@ -1,7 +1,7 @@
 package net.lz1998.pbbot.plugin;
 
 import lombok.extern.slf4j.Slf4j;
-import net.lz1998.pbbot.bean.Charcater;
+import net.lz1998.pbbot.bean.Character;
 import net.lz1998.pbbot.bot.Bot;
 import net.lz1998.pbbot.bot.BotPlugin;
 import net.lz1998.pbbot.constant.Constant;
@@ -46,12 +46,12 @@ public class GroupMessagePlugin extends BotPlugin {
             //匹配字典名称
             String charcaterName = dirctionaryName.matchDictionName(chinese);
             if (!StringUtil.isBlank(charcaterName)) {
-                Charcater charcater = parseHtml.parseImageUrl(charcaterName);
+                Character character = parseHtml.parseImageUrl(charcaterName);
                 //发送群消息
-                Msg msg = Msg.builder().image(charcater.getImageUrl())
+                Msg msg = Msg.builder().image(character.getImageUrl())
 //                        .at(userId)
                         .share(Constant.Wiki_Path+charcaterName,
-                                charcater.getTitle(), charcater.getContent(), charcater.getImageUrl())
+                                character.getTitle(), character.getContent(), character.getImageUrl())
                         .sendToGroup(bot, groupId);
             }
 
