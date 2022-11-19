@@ -22,3 +22,10 @@
 
 ## CQ WIKI 链接
      https://wiki.biligame.com/cq/
+
+## 部署相关
+本项目打包方式把lib单独外打
+
+第一次打包时候，把lib单独上传到jar包运行路径下。
+
+后续如无lib包变更，可直接上传新jar包运行start.sh即可

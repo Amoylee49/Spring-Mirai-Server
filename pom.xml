@@ -10,13 +10,17 @@
     </parent>
     <groupId>net.lz1998</groupId>
     <artifactId>spring-mirai-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>spring-mirai-server</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
         <maven.test.skip>true</maven.test.skip>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 将 maven 自带的时间戳格式化 -->
+        <maven.build.timestamp.format>yyMMdd</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -63,23 +67,6 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <repositories>
         <repository>
             <id>aliyun</id>
@@ -109,5 +96,158 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
+    <build>
+        <finalName>${artifactId}-${version}-${git.commit.id.abbrev}-${maven.build.timestamp}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>net.lz1998.pbbot.SpringMiraiServerApplication</mainClass>
+                    <!--重写包含依赖，包含不存在的依赖，jar里没有pom里的依赖-->
+                    <includes>
+                        <include>
+                            <groupId>null</groupId>
+                            <artifactId>null</artifactId>
+                        </include>
+                    </includes>
+                    <layout>ZIP</layout>
+                    <!--使用外部配置文件，jar包里没有资源文件-->
+                    <addResources>true</addResources>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--拷贝依赖 copy-dependencies-->
+            <!--也可以执行mvn copy-dependencies 命令打包依赖-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib/
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--打包jar-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <!--不打包资源文件-->
+                    <!--<excludes>-->
+                    <!--<exclude>*.**</exclude>-->
+                    <!--<exclude>*/*.xml</exclude>-->
+                    <!--</excludes>-->
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <!--MANIFEST.MF 中 Class-Path 加入前缀-->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!--jar包不包含唯一版本标识-->
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <!--指定入口类-->
+                            <mainClass>net.lz1998.pbbot.SpringMiraiServerApplication</mainClass>
+                        </manifest>
+                        <!--<manifestEntries>-->
+                        <!--&lt;!&ndash;MANIFEST.MF 中 Class-Path 加入资源文件目录&ndash;&gt;-->
+                        <!--<Class-Path>./resources/</Class-Path>-->
+                        <!--</manifestEntries>-->
+                    </archive>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.0.0</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>validate-the-git-infos</id>
+                        <goals>
+                            <goal>validateRevision</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- ".git"文件路径;默认值:${project.basedir}/.git; -->
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <!--<prefix>git</prefix>-->
+                    <!-- 使properties扩展到整个maven build 周期
+                    Ref: https://github.com/ktoso/maven-git-commit-id-plugin/issue/280 -->
+                    <injectAllReactorProjects>true</injectAllReactorProjects>
+                    <!--日期格式;默认值:dd.MM.yyyy '@' HH:mm:ss z;-->
+                    <dateFormat>yyyyMMddHHmmss</dateFormat>
+                    <!--构建过程中,是否打印详细信息;默认值:false;-->
+                    <verbose>true</verbose>
+                    <!--若项目打包类型为pom,是否取消构建;默认值:true;-->
+                    <!--<skipPoms>false</skipPoms>-->
+                    <!--是否生成"git.properties"属性文件;默认值:false;-->
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <!--指定"git.properties"文件的存放路径(相对于${project.basedir}的一个路径);-->
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <!--".git"文件夹未找到时,构建是否失败;若设置true,则构建失败;若设置false,则跳过执行该目标;默认值:true;-->
+                    <!--<failOnNoGitDirectory>true</failOnNoGitDirectory>-->
+                    <format>properties</format>
+                    <!--<format>json</format>-->
+                    <abbrevLength>8</abbrevLength>
+                    <!-- git描述配置,可选;由JGit提供实现; -->
+                    <gitDescribe>
+                        <!-- 是否生成描述属性 -->
+                        <skip>false</skip>
+                        <!-- 提交操作未发现tag时,仅打印提交操作ID, -->
+                        <always>false</always>
+                        <!-- 提交操作ID显式字符长度,最大值为:40;默认值:7;0代表特殊意义;后面有解释; -->
+                        <abbrev>8</abbrev>
+                        <!-- 构建触发时，代码有修改时(即"dirty state"),添加指定后缀;默认值:""; -->
+                        <dirty>-dirty</dirty>
+                        <!--always print using the "tag-commits_from_tag-g_commit_id-maybe_dirty" format, even if "on" a tag.
+                        The distance will always be 0 if you're "on" the tag.
+                        -->
+                        <forceLongFormat>false</forceLongFormat>
+                    </gitDescribe>
+                    <!--使用本地分支-->
+                    <offline>true</offline>
+                    <!--<validationProperties>-->
+                    <!--&lt;!&ndash; verify that the current repository is not dirty &ndash;&gt;-->
+                    <!--<validationProperty>-->
+                    <!--<name>validating git dirty</name>-->
+                    <!--<value>${git.dirty}</value>-->
+                    <!--<shouldMatchTo>false</shouldMatchTo>-->
+                    <!--</validationProperty>-->
+                    <!--</validationProperties>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
