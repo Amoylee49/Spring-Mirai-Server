@@ -117,9 +117,8 @@ public class CharacterCaches {
         );
 
         Character character = characterBuilder.build();
-        CharacterHolder characterHolder = CharacterHolder.builder()
-                .character(character)
-                .build();
+        CharacterHolder characterHolder = new CharacterHolder();
+        characterHolder.setCharacter(character);
         characterHolder.addNickName(heroName);
         for (Element element : document.select("div.cqframe_oth-name>p>span")) {
             characterHolder.addNickName(element.text());
