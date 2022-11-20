@@ -20,7 +20,7 @@ public abstract class MessageProcessor {
     public List<String> getCommandParameters(String message) {
         Matcher matcher = Pattern.compile(command, Pattern.CASE_INSENSITIVE)
                 .matcher(message);
-        String parameters = matcher.replaceFirst("");
+        String parameters = matcher.replaceFirst("").trim();
         return Arrays.asList(parameters.split(","));
     }
 
