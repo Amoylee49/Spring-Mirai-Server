@@ -23,6 +23,7 @@ public class GroupMessagePlugin extends BotPlugin {
     public int onGroupMessage(@NotNull Bot bot, @NotNull OnebotEvent.GroupMessageEvent event) {
         long groupId = event.getGroupId();
         String rawMessage = event.getRawMessage();
+        log.info("收到消息:{}", rawMessage);
 
         for (MessageProcessor messageProcessor : messageProcessors) {
             if (messageProcessor.isMatch(rawMessage)) {
