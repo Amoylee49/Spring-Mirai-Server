@@ -4,13 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.lz1998.pbbot.constant.Constant;
 import net.lz1998.pbbot.util.StringUtils;
 import net.lz1998.pbbot.utils.Msg;
-import onebot.OnebotBase;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.List;
 
 import static net.lz1998.pbbot.constant.Constant.WIKI_PATH;
 
@@ -27,7 +25,7 @@ public class NormalUrlMessageProcessor extends MessageProcessor {
     }
 
     @Override
-    public List<OnebotBase.Message> process(String message) {
+    public Msg process(String message) {
         String parameter = getCommandParameters(message).get(0);
         if (StringUtils.isEmpty(parameter)) {
             return null;
@@ -37,13 +35,13 @@ public class NormalUrlMessageProcessor extends MessageProcessor {
                 return Msg.builder().image(Constant.WIKI_LOGO_PATH)
                         .share(WIKI_PATH + type,
                                 type+Constant.WIKI_TITLE_TAIL, Constant.WIKI_NORMAL_CONTENT, Constant.WIKI_LOGO_PATH
-                        ).build();
+                        );
             }
         }
         for (String areaType : areaType){
             if (areaType.startsWith(parameter) || areaType.endsWith(parameter)){
                 try {
-                    return Msg.builder().text(WIKI_PATH + URLEncoder.encode(Constant.WIKI_AREA, "utf-8")).build();
+                    return Msg.builder().text(WIKI_PATH + URLEncoder.encode(Constant.WIKI_AREA, "utf-8"));
                 } catch (UnsupportedEncodingException e) {
                     throw  new RuntimeException(e);
                 }

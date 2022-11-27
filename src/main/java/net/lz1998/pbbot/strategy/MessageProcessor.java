@@ -1,6 +1,6 @@
 package net.lz1998.pbbot.strategy;
 
-import onebot.OnebotBase;
+import net.lz1998.pbbot.utils.Msg;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +24,6 @@ public abstract class MessageProcessor {
         return Arrays.asList(parameters.split(","));
     }
 
-    public abstract List<OnebotBase.Message> process(String message);
+    public abstract Msg process(String message);
 
 }

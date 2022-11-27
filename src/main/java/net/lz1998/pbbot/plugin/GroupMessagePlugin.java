@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.lz1998.pbbot.bot.Bot;
 import net.lz1998.pbbot.bot.BotPlugin;
 import net.lz1998.pbbot.strategy.MessageProcessor;
-import onebot.OnebotBase;
+import net.lz1998.pbbot.utils.Msg;
 import onebot.OnebotEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class GroupMessagePlugin extends BotPlugin {
 
         for (MessageProcessor messageProcessor : messageProcessors) {
             if (messageProcessor.isMatch(rawMessage)) {
-                List<OnebotBase.Message> messages = messageProcessor.process(rawMessage);
+                Msg messages = messageProcessor.process(rawMessage);
                 if (messages != null) {
                     bot.sendGroupMsg(groupId, messages, false);
                     return MESSAGE_BLOCK;

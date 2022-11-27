@@ -1,6 +1,7 @@
 package net.lz1998.pbbot.controller;
 
 import net.lz1998.pbbot.strategy.MessageProcessor;
+import net.lz1998.pbbot.utils.Msg;
 import onebot.OnebotBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,10 @@ public class MessageController {
     public String testCommand(@RequestParam String cmd) {
         for (MessageProcessor messageProcessor : messageProcessors) {
             if (messageProcessor.isMatch(cmd)) {
-                List<OnebotBase.Message> messages = messageProcessor.process(cmd);
-                if (messages != null) {
+                Msg msg = messageProcessor.process(cmd);
+                if (msg != null) {
                     StringBuilder result = new StringBuilder();
+                    List<OnebotBase.Message> messages = msg.build();
                     for (OnebotBase.Message message : messages) {
                         result.append(message.toString());
                     }

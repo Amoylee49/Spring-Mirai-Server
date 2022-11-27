@@ -3,11 +3,9 @@ package net.lz1998.pbbot.strategy;
 import lombok.extern.slf4j.Slf4j;
 import net.lz1998.pbbot.bean.Character;
 import net.lz1998.pbbot.bean.CharacterHolder;
-import net.lz1998.pbbot.constant.Constant;
 import net.lz1998.pbbot.method.CharacterCaches;
 import net.lz1998.pbbot.util.StringUtils;
 import net.lz1998.pbbot.utils.Msg;
-import onebot.OnebotBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -28,7 +26,7 @@ public class HeroMessageProcessor extends MessageProcessor {
     }
 
     @Override
-    public List<OnebotBase.Message> process(String message) {
+    public Msg process(String message) {
         String parameter = getCommandParameters(message).get(0);
         if (StringUtils.isEmpty(parameter)) {
             return null;
@@ -39,12 +37,8 @@ public class HeroMessageProcessor extends MessageProcessor {
             for (String nickName : nickNames) {
                 if (nickName.startsWith(parameter) || nickName.endsWith(parameter)) {
                     Character character = characterHolder.getCharacter();
-                    return Msg.builder().image(character.getImageUrl())
-                            .share(Constant.WIKI_PATH + character.getName(),
-                                    character.getTitle(),
-                                    character.getContent(),
-                                    character.getImageUrl()
-                            ).build();
+                    return Msg.builder()
+                            .text(character.getName() + "\n" + character.getPageUrl());
                 }
             }
         }
