@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedInputStream;
@@ -25,9 +26,13 @@ import java.util.List;
 @Component
 public class CharacterCaches {
 
+    @Autowired
+    private CharacterCachesStatus status;
+
     private List<CharacterHolder> characters;
 
     public boolean cacheAllCharactersFromWeb() {
+        status.clearStatus();
         characters = generateAllCharactersFromWeb();
         return characters.size() != 0;
     }
@@ -59,7 +64,9 @@ public class CharacterCaches {
 
     private List<CharacterHolder> generateAllCharactersFromWeb() {
         List<CharacterHolder> result = new LinkedList<>();
+        int index = 1;
         for (String type : Constant.CHARACTER_TYPE) {
+            status.setInTotalProgress(index ++);
             String url = Constant.WIKI_PATH + type;
             result.addAll(processTypePage(url));
         }
@@ -78,7 +85,11 @@ public class CharacterCaches {
         List<CharacterHolder> characterHolders = new LinkedList<>();
 
         Elements elements = document.getElementsByClass("solo_hero_box");
+        int index = 1;
+        int size = elements.size();
+        status.setSubProgress(size);
         for (Element e : elements) {
+            status.setInSubProgress(index ++);
             String heroName = e.select("div.name>span>b").text();
             String heroUrl = Constant.WIKI_BASE_PATH + e.select("div.img>a").attr("href");
             CharacterHolder characterHolder = processHeroPage(heroUrl, heroName);
