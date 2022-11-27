@@ -12,4 +12,4 @@ else
 fi
 
 echo "启动项目"
-nohup Go-Mirai-Client >/root/logs/client/logs.txt 2>&1 &
+nohup Go-Mirai-Client -sms true>/root/logs/client/logs.txt 2>&1 &
