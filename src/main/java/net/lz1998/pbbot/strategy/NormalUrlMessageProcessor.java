@@ -32,10 +32,8 @@ public class NormalUrlMessageProcessor extends MessageProcessor {
         }
         for (String type : specialType) {
             if (type.startsWith(parameter) || type.endsWith(parameter)) {
-                return Msg.builder().image(Constant.WIKI_LOGO_PATH)
-                        .share(WIKI_PATH + type,
-                                type+Constant.WIKI_TITLE_TAIL, Constant.WIKI_NORMAL_CONTENT, Constant.WIKI_LOGO_PATH
-                        );
+                return Msg.builder()
+                        .text(type + "\n" + WIKI_PATH + type);
             }
         }
         for (String areaType : areaType){
