@@ -1,5 +1,6 @@
 package net.lz1998.pbbot.strategy;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.lz1998.pbbot.constant.Constant;
 import net.lz1998.pbbot.util.StringUtils;
@@ -25,6 +26,7 @@ public class NormalUrlMessageProcessor extends MessageProcessor {
     }
 
     @Override
+    @SneakyThrows
     public Msg process(String message) {
         String parameter = getCommandParameters(message).get(0);
         if (StringUtils.isEmpty(parameter)) {
@@ -32,17 +34,12 @@ public class NormalUrlMessageProcessor extends MessageProcessor {
         }
         for (String type : specialType) {
             if (type.startsWith(parameter) || type.endsWith(parameter)) {
-                return Msg.builder()
-                        .text(type + "\n" + WIKI_PATH + type);
+                return Msg.builder().text(type + "\n" + WIKI_PATH + URLEncoder.encode(type, "utf-8"));
             }
         }
         for (String areaType : areaType){
             if (areaType.startsWith(parameter) || areaType.endsWith(parameter)){
-                try {
-                    return Msg.builder().text(WIKI_PATH + URLEncoder.encode(Constant.WIKI_AREA, "utf-8"));
-                } catch (UnsupportedEncodingException e) {
-                    throw  new RuntimeException(e);
-                }
+                return Msg.builder().text(areaType + "\n" + WIKI_PATH + URLEncoder.encode(Constant.WIKI_AREA, "utf-8"));
             }
         }
         return null;
