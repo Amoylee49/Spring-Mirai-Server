@@ -2,6 +2,7 @@ spring:
   bot:
     plugin-list: # 配置插件列表（有序），如果插件返回0，继续执行剩余插件，如果插件返回1，终止剩余插件执行
       - net.lz1998.pbbot.plugin.GroupMessagePlugin # 群消息插件 Message_Block 下面都不执行
+      - net.lz1998.pbbot.plugin.QRCodeMessagePlugin  #二维码接口要用需放开
 
 server:
   port: 8081
