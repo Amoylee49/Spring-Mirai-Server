@@ -17,7 +17,8 @@ public class TipMessageProcessor extends MessageProcessor {
     @Override
     public Msg process(String message) {
         return Msg.builder()
-                .text("支持勇士，勇士登场期数参考表，特殊技能，精淬武器，戒指，服装，符文，女神，领主，灵魂要塞，活动日历等wiki查询。\n" +
+                .text("关键字：勇士登场期数参考表,特殊技能, 精淬武器, 戒指, 服装, 符文, 女神, 领主,全力战,活动日历," +
+                        "Buff的叠加方式,原画图鉴,游戏壁纸,CQ表情包,CQ联动史,CQ玩家用语集,勇士别名一览,过场画面,游戏图标一览,周年纪念册\n" +
                         "请输入例如qr浦西或者查询浦西");
     }
 }
